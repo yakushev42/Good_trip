@@ -1,0 +1,104 @@
+{% extends "edit.html" %}
+{% block content2 %}
+<p>
+	<form method="post" action="">
+		<input type="submit" name="add_country" value="Добавить страну" class="button2" />
+	</form>
+</p>
+
+<p>
+ {% if form %}
+ <form action="" method="post"  novalidate>
+        {{ form.hidden_tag() }}
+		<p>
+            {{ form.Name.label }}<br>
+            {{ form.Name }}<br>
+            {% for error in form.Name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+		<input type="hidden" name="form" value="country">
+		{{ form.submit() }}
+		</p>
+		<p>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                     <ul class=flashes>
+                     {% for message in messages %}
+                         <li>{{ message }}</li>
+                     {% endfor %}
+                     </ul>
+                {% endif %}
+            {% endwith %}
+        </p>
+    </form>
+</p>
+{% endif %}
+{% if country %}
+        {% for country in country %}
+            
+			{{ country.name}}
+			<form method="post" action="">
+			<input type="hidden" name="name" value={{ country.name}}>
+			<input type="submit" name="delete_country" value="X" class="button3"/>
+			</form>
+		<p>
+				<form method="post" action="">
+					<input type="hidden" name="name" value={{ country.name}}>
+					<input type="submit" name="add_city" value="Добавить город" class="button2" />
+				</form>
+		</p>	
+				{% if form2 %}
+			{% if sel==country.name %}
+			<div class="elem">
+			<form id="a" action="" method="post"  novalidate>
+				{{ form2.hidden_tag() }}
+				<p>
+				{{ form2.Name.label }}<br>
+				{{ form2.Name }}<br>
+				{% for error in form2.Name.errors %}
+				<span style="color: red;">[{{ error }}]</span>
+				{% endfor %}
+				</p>
+				<p>
+				<input type="hidden" name="name" value={{ country.name}}>
+				<input type="hidden" name="form" value="city">
+				{{ form2.submit() }}</p>
+				<p>
+				{% with messages = get_flashed_messages() %}
+					{% if messages %}
+						 <ul class=flashes>
+						 {% for message in messages %}
+							 <li>{{ message }}</li>
+						 {% endfor %}
+						 </ul>
+					{% endif %}
+				{% endwith %}
+				</p>
+			</form>
+			</div>
+		{% endif %}
+		{% endif %}
+		{% for city in city %}
+		<p>
+		{% if city.country==country.name %}
+		<li class="elem">
+		{{ city.name }}<a href="{{ url_for('hotel',city=city.name ) }}"> отели {{city.hotel}}</a>
+		<form method="post" action="">
+		<input type="hidden" name="name" value={{ city.name}}>
+		<input type="submit" name="delete_city" value="X" class="button3" />
+		</form>
+		</li>
+		{% endif %}
+		</p>
+		{% endfor %}		
+		
+	
+		<hr>
+        {% endfor %}
+    {% else %}
+        Стран пока нет
+    {% endif %}
+
+ {% endblock %}

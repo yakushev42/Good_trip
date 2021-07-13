@@ -1,0 +1,119 @@
+{% extends "edit.html" %}
+{% block content2 %}
+	<div class="head">
+	 <h2>Маршрут {{namerout}}</h2>
+	</div>
+	{%if stay%}
+		{% for stay in stay %}
+			<div class="elem">
+			<p>
+			{{stay.staynum}} . длительность: {{stay.duration}} день  город:<a href="{{ url_for('hotel',city=stay.city ) }}"> {{stay.city}}</a>   
+			</p>
+			<p>
+			экскурсии:
+			</p>
+			<p>
+				{% for excursion in excursion %}
+				{% if excursion.staynum==stay.staynum %}
+				<p>
+					Название: {{excursion.name}}   длительность: {{excursion.duration}}ч
+				</p>
+				{%endif%}
+				{%endfor%}
+			{% if not current_user.is_anonymous %}
+			{% if current_user.check_role() %}
+			<form method="post" action="">
+			<input type="hidden" name="staynum" value="{{stay.staynum}}">
+			<input type="submit" name="add_excursion" value="Добавить экскурсию" class="button" />
+			</form>                  
+		    {%endif%}
+			{%endif%}
+			
+			{%if form2%}
+			{% if sel==stay.staynum %}
+			<form  action="" method="post">
+					{{ form2.hidden_tag() }}
+					<p>
+							{{ form2.Name.label }}<br>
+							{{ form2.Name }}<br>
+							{% for error in form2.Name.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+					</p>
+					<p>
+							{{ form2.Duration.label }}<br>
+							{{ form2.Duration }}<br>
+							{% for error in form2.Duration.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+							{% endfor %}
+					</p>
+					<p>
+						<input type="hidden" name="staynum" value="{{stay.staynum}}">
+						<input type="hidden" name="form" value="excursion">
+						{{ form2.submit() }}
+					</p>
+					<p>
+						{% with messages = get_flashed_messages() %}
+							{% if messages %}
+								<ul class=flashes>
+									{% for message in messages %}
+										<li>{{ message }}</li>
+									{% endfor %}
+								</ul>
+							{% endif %}
+						{% endwith %}
+					</p>
+			</form>
+			{%endif%}
+			{%endif%}
+			</div>
+		{%endfor%}
+	{%else%}
+		остановок пока нет
+	{%endif%}
+	{% if not current_user.is_anonymous %}
+	{% if current_user.check_role() %}
+	<p>
+	<form method="post" action="">
+			<input type="submit" name="add_stay" value="Добавить остановку" class="button" />
+	</form>
+	</p>
+	{%endif%}
+	{%endif%}
+	{%if form%}
+		<div class="elem">
+		<form action="" method="post">
+				{{ form.hidden_tag() }}
+				<p>
+						{{ form.Duration.label }}<br>
+						{{ form.Duration }}<br>
+						{% for error in form.Duration.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+						{{ form.City.label }}<br>
+						{{ form.City }}<br>
+						{% for error in form.City.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+					<input type="hidden" name="form" value="stay">
+					{{ form.submit() }}
+				</p>
+				<p>
+					{% with messages = get_flashed_messages() %}
+						{% if messages %}
+							<ul class=flashes>
+								{% for message in messages %}
+									<li>{{ message }}</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					{% endwith %}
+				</p>
+		</form>
+		</div>
+	{%endif%}
+{% endblock %}

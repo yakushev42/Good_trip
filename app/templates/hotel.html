@@ -1,0 +1,108 @@
+{% extends "edit.html" %}
+{% block content2 %}
+	
+	<div class="head">
+	<h2>Отели города {{city}}</h2>
+	</div>
+	{%if hotel%}
+		{%for hotel in hotel%}
+			<div class="elem">
+			<p>
+			{{hotel.name}} {{hotel.type}} звезд
+			</p>
+			{%if room%}
+			Типы комнат:
+				{%for room in room%}
+					{%if room.namehotel==hotel.name%}
+						{{room.type}} 
+					{%endif%}
+				{%endfor%}
+			{%else%}
+				Комнат нет
+			{%endif%}
+			{% if not current_user.is_anonymous %}
+			{% if current_user.check_role() %}
+			<form method="post" action="">
+			<input type="submit" name="add_room" value="Добавить тип комнаты" class="button"/>
+			</form>
+			{%endif%}
+			{%endif%}
+			{%if form2%}
+				<form action="" method="post">
+						{{ form2.hidden_tag() }}
+						<p>
+								{{ form2.Type.label }}<br>
+								{{ form2.Type }}<br>
+								{% for error in form2.Type.errors %}
+								<span style="color: red;">[{{ error }}]</span>
+								{% endfor %}
+						</p>
+						<p>
+							<input type="hidden" name="hotel" value="{{hotel.name}}">
+							<input type="hidden" name="form" value="room">
+							{{ form2.submit() }}
+						</p>
+						<p>
+							{% with messages = get_flashed_messages() %}
+								{% if messages %}
+									<ul class=flashes>
+										{% for message in messages %}
+											<li>{{ message }}</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							{% endwith %}
+						</p>
+				</form>
+			{% endif %}
+			</div>
+			{% endfor %}
+	{%else%}
+	Отелей нет
+	{%endif%}
+	{% if not current_user.is_anonymous %}
+	{% if current_user.check_role() %}
+	<p>
+	<form method="post" action="">
+			<input type="submit" name="add_hotel" value="Добавить отель" class="button"/>
+	</form>
+	</p>
+	{%endif%}
+	{%endif%}
+	{%if form%}
+		<div class="elem">
+		<form action="" method="post">
+				{{ form.hidden_tag() }}
+				<p>
+						{{ form.Name.label }}<br>
+						{{ form.Name }}<br>
+						{% for error in form.Name.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+						{{ form.Type.label }}<br>
+						{{ form.Type }}<br>
+						{% for error in form.Type.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+					<input type="hidden" name="form" value="hotel">
+					{{ form.submit() }}
+				</p>
+				<p>
+					{% with messages = get_flashed_messages() %}
+						{% if messages %}
+							<ul class=flashes>
+								{% for message in messages %}
+									<li>{{ message }}</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					{% endwith %}
+				</p>
+		</form>
+		</div>
+	{%endif%}
+{% endblock %}

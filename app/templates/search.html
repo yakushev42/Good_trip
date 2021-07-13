@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Поиск</h1>
+	<form action="" method="post">
+	<p>{{ form.DateStart.label }}<br>
+	   {{ form.DateStart() }}<br>
+       {% for error in form.DateStart.errors %}
+       <span style="color: red;">[{{ error }}]</span>
+       {% endfor %}</p>
+	<p>{{ form.DateEnd.label }}<br>
+	   {{ form.DateEnd() }}<br>
+       {% for error in form.DateStart.errors %}
+       <span style="color: red;">[{{ error }}]</span>
+       {% endfor %}</p>
+	<p>{{ form.LeghtMin.label }}<br>
+	   {{ form.LeghtMin() }}</p>
+	<p>{{ form.LeghtMax.label }}<br>
+	   {{ form.LeghtMax() }}</p>
+	<p>{{ form.MinCost.label }}<br>
+	   {{ form.MinCost() }}</p>
+	<p>{{ form.MaxCost.label }}<br>
+	   {{ form.MaxCost() }}</p>
+	<p>{{ form.submit() }}</p>
+	</form>
+{% endblock %}

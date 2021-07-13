@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="login">
+    <h1>Регистрация</h1>
+	<div class = "form-group required"> 
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.nickname.label }}<br>
+            {{ form.nickname(size=32) }}<br>
+            {% for error in form.nickname.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password2.label }}<br>
+            {{ form.password2(size=32) }}<br>
+            {% for error in form.password2.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.worker() }} {{ form.worker.label }}</p>
+        <p>{{ form.submit(class="button2") }}</p>
+     
+    </form>
+	</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+{% if not current_user.is_anonymous %}
+{% if current_user.check_role() %}
+<div>
+	<span class="menu">Редактирование:</span>
+    <a href="{{ url_for('groups') }}" class="button" >Группы</a>
+	<a href="{{ url_for('routes') }}" class="button" >Маршруты</a>
+	<a href="{{ url_for('maps') }}" class="button">Карты</a>
+		</div>
+		 <hr>
+{%endif%}
+{%endif%}
+	{% block content2 %}{% endblock %}
+</p>
+
+{% endblock %}

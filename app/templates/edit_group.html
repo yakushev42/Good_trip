@@ -1,0 +1,89 @@
+{% extends "edit.html" %}
+{% block content2 %}
+  {%if form2%}
+	<div class="head">
+	Группы
+	<form action="" method="post">
+				{{ form2.hidden_tag() }}
+				<p>
+						{{ form2.SortType.label }}
+						{{ form2.Sortgroup }}
+						{{ form2.SortType }}
+						{{ form2.submit() }}
+				</p>
+
+			</form>
+	</div>
+  {%endif%}
+		<p>
+		<form method="post" action="">
+			<input type="submit" name="add_group" value="Добавить группу" class="button"/>
+		</form>
+	</p>
+	<p>
+		{% if form %}
+			<div class="elem">
+			<form action="" method="post">
+				{{ form.hidden_tag() }}
+				<p>Дата начала</p>
+				<input type="date"  name="DateStart"
+						value="2020-12-01">
+				
+				<p>
+						{{ form.NameRoute.label }}<br>
+						{{ form.NameRoute }}<br>
+						{% for error in form.NameRoute.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+					{{ form.submit() }}
+				</p>
+				<p>
+					{% with messages = get_flashed_messages() %}
+						{% if messages %}
+							<ul class=flashes>
+								{% for message in messages %}
+									<li>{{ message }}</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					{% endwith %}
+				</p>
+			</form>
+			</div>
+		{% endif %}
+	</p>
+	{% if group %}
+		{% for group in group %}
+			<div class="elem">
+			
+			{{group.groupid}}:{{group.nameroute}}
+			<form method="post" action="">
+			<input type="hidden" name="groupid" value={{group.groupid}}>
+			<input type="submit" name="delete_group" value="X" class="button3"/>
+			</form>
+			
+			<p>
+			Дата начала:{{group.datestart}} Размер:{{group.size}}
+			</p>
+			{%if voucher%}
+			{% for voucher in voucher %}
+			{%if voucher.groupid==group.groupid%}
+			<li>
+			
+			ФИО:{{voucher.fio}} Паспорт:{{voucher.passport}} Адрес:{{voucher.address}} Телефон:{{voucher.phone}}
+			<p>
+			Дата рождения:{{voucher.datebirth}}
+			</p>
+			</li>
+			{%endif%}
+			{% endfor %}
+			{%endif%}
+			</div>
+			<hr>
+		{% endfor %}
+    {% else %}
+        Групп пока нет
+	{% endif %}
+{% endblock %}

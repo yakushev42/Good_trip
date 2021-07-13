@@ -1,0 +1,45 @@
+<html>
+    <head>
+		{% if title %}
+			<title>{{ title }} - Турфирма</title>
+        {% else %}
+			<title>Добро пожаловать</title>
+		{% endif %}
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    </head>
+    <body>
+		<img src="{{ url_for('static', filename='Head.png') }}" alt="vd">
+		<div>
+			<span class="menu">Навигация:</span>
+			<a href="{{ url_for('index') }}" class="button">Главная</a>
+			{% if not current_user.is_anonymous %}
+			{% if current_user.check_role() %}
+				<a href="{{ url_for('groups') }}" class="button">Администрирование </a>
+			{% endif %}
+			{% endif %}
+			{% if current_user.is_anonymous %}
+				<a href="{{ url_for('login') }}" class="button">Авторизация</a>
+				<a href="{{ url_for('register') }}" class="button">Регистрация</a>
+		   {% else %}
+			   <span class="right">
+			   {{ current_user.nickname }}:
+			   <a href="{{url_for('basket') }}" class="button"> Корзина </a>
+			   <a href="{{ url_for('logout') }}" class="button"> Выйти</a>
+	      {% endif %}
+	   
+		</div>
+			<hr>
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+			<ul>
+				{% for message in messages %}
+				<li>{{ message }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+			{% endwith %}
+			{% block content %}{% endblock %}
+    </body>
+</html>
+
+ 

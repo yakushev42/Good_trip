@@ -1,0 +1,99 @@
+
+body {
+	
+	max-width: 960px;
+	margin: 0 auto; 
+	
+}
+h2 {
+	text-align: center;
+}
+form{
+	display: inline
+}
+li{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.sidebar {
+	background: #dedede;
+	float: left;
+	margin-right: 10px;
+	max-width: 200px;
+	min-width: 150px;
+}
+.right{
+float: right;
+}
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button2{
+    background-color: #4CAF50;
+    border: none;
+	border-radius: 10px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.button3{
+    background-color: #ba0000;
+    border: none;
+	border-radius: 10px;
+    color: white;
+    padding: 5x 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.menu{
+ font-size: 150%; 
+}
+.list{
+	margin-left: 200px;
+}
+.elem{
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:10px;
+	background: #fc0; /* Цвет фона */
+    border: 3px solid #fff; /* Белая рамка */
+    border-radius: 10px; /* Радиус скругления */
+}
+.head{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:10px;
+	background: #00e6ff; /* Цвет фона */
+    border: 3px solid #fff; 
+    border-radius: 10px;  Радиус скругления 
+}
+.login{
+	background-color: rgba(255, 255, 0, 0.6);
+	padding-left:40px;
+	margin-top: 20px;
+	margin-left: auto;
+    margin-right: auto;
+	width: 300px;
+	border: 3px solid #fff;
+	border-radius: 20px;
+}

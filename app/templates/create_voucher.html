@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% if group %}
+	<div class="login">
+		<p>
+		Оформление путёвки на маршут  {{ group.nameroute }}  
+		</p>
+		Дата начала: {{ group.datestart }} 
+		{% if form %}
+			<form action="" method="post">
+				{{ form.hidden_tag() }}
+				<p>
+						{{ form.Passport.label }}<br>
+						{{ form.Passport }}<br>
+						{% for error in form.Passport.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+						{{ form.Fio.label }}<br>
+						{{ form.Fio }}<br>
+						{% for error in form.Fio.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+						{{ form.Address.label }}<br>
+						{{ form.Address }}<br>
+						{% for error in form.Address.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+						{{ form.Phone.label }}<br>
+						{{ form.Phone }}<br>
+						{% for error in form.Phone.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+					Дата рождения
+				</p>
+				<p>
+				<input type="date"  name="DateBirth"
+				value="1970-01-01">
+				</p>
+				<p>
+					{{ form.submit() }}
+				</p>
+				<p>
+					{% with messages = get_flashed_messages() %}
+						{% if messages %}
+							<ul class=flashes>
+								{% for message in messages %}
+									<li>{{ message }}</li>
+								{% endfor %}
+							</ul>
+						{% endif %}
+					{% endwith %}
+				</p>
+			</form>
+		</div>
+		{% endif %}
+	{% else %}
+        Упс
+	{% endif %}
+{% endblock %}

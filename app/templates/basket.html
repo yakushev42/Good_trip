@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% if contract %}
+		{%  for contract  in contract %}
+		<div class="elem">
+			<p>
+			{{contract.contractid}} тип оплаты:{{contract.paytype}}
+			</p>
+			{% for voucher in voucher %}
+				{%if voucher.contractid == contract.contractid %}
+				<p>
+					Маршрут:<a href="{{ url_for('stay',nameroute=voucher.nameroute ) }}">{{voucher.nameroute}}</a> №группы:{{voucher.groupid}} Дата начала:{{voucher.datestart}} ФИО:{{voucher.fio}} Пасспорт:{{voucher.passport}} Адрес:{{voucher.address}} Телефон:{{voucher.phone}} Дата рождения:{{voucher.datebirth}}
+					{% if contract.paytype=='No' %}
+					<form method="post" action="">
+						<input type="hidden" name="contractid" value="{{contract.contractid}}">
+						<input type="hidden" name="passport" value="{{voucher.passport}}">
+						<input type="submit" name="delete_voucher" value="Отказаться" class="button3"/>
+					</form>
+					{% endif %}
+				</p>
+				{% endif %}
+			{% endfor %}
+			Сумма договора {{contract.sum}} руб
+			{% if contract.paytype=='No' %}
+			<form method="post" action="">
+						
+				<p>
+						{{ form.PayType }}<br>
+						{% for error in form.PayType.errors %}
+						<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
+				</p>
+				<p>
+				<input type="hidden" name="contractid" value="{{contract.contractid}}">
+					{{ form.submit(class="button") }}
+				</p>		
+			</form>
+			{% endif %}
+			</div>
+		{% endfor %}
+	{% else %}
+        Список договоров пуст
+	{% endif %}
+	
+{% endblock %}

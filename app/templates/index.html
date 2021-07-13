@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="head">
+		<h2>Группы</h2>
+	</div>
+	<div class="sidebar">
+		<h4>Поиск </h4>
+		<a href="{{ url_for('routes' )}}" class="button">поиск маршрутов</a>
+		<form action="" method="post">
+			<p>Дата начала</p>
+			<input type="date"  name="DateStart"
+						value="2020-12-01">
+			<p>Конечная дата</p>
+			<input type="date"  name="DateEnd"
+						value="2030-01-01">
+			<p>{{ form.LeghtMin.label }}<br>
+			   {{ form.LeghtMin() }}</p>
+			<p>{{ form.LeghtMax.label }}<br>
+			   {{ form.LeghtMax() }}</p>
+			<p>{{ form.MinCost.label }}<br>
+			   {{ form.MinCost() }}</p>
+			<p>{{ form.MaxCost.label }}<br>
+			   {{ form.MaxCost() }}</p>
+			<p>{{ form.Pers.label }}<br>
+			   {{ form.Pers() }}</p>
+			<p>{{ form.Country.label }}<br>
+			   {{ form.Country() }}</p>
+			<p>{{ form.City.label }}<br>
+			   {{ form.City() }}</p>
+			   Количество остановок
+			<p>{{ form.Stay0.label }}<br>
+			   {{ form.Stay0() }}</p>
+			<p>{{ form.Stay1.label }}<br>
+			   {{ form.Stay1() }}</p>
+			   Звёзд отелей
+			<p>{{ form.Hotel0.label }}<br>
+			   {{ form.Hotel0() }}</p>
+			<p>{{ form.Hotel1.label }}<br>
+			   {{ form.Hotel1() }}</p>
+			<p>{{ form.Sortgroup.label }}<br>
+			   {{ form.Sortgroup() }}</p>
+			<p>{{ form.SortType() }}</p>
+			<p>{{ form.submit() }}</p>
+		</form>
+	</div>
+	<div class="list">
+		{% if group %}
+			{% for group in group %}
+				<div class="elem"> 
+					<p>
+					{{group.groupid}}:<a href="{{ url_for('stay',nameroute=group.nameroute ) }}">{{group.nameroute}}</a>
+					</p>
+					<p>
+					Дата начала:{{group.datestart}} Размер:{{group.size}} из {{group.maxsize}}
+					{%if not group.size == group.maxsize %}
+					<form method="post" action="">
+						<input type="hidden" name="groupid" value={{ group.groupid}}>
+						<input type="submit" name="create_voucher" value="Оформить путёвку" class="button"/>
+					</form>
+					{%endif%}
+					</p>
+				</div>
+			<hr>
+			{% endfor %}
+		{% else %}
+        Групп пока нет
+		{% endif %}
+	</div>
+{% endblock %}

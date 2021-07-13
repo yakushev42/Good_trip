@@ -1,0 +1,144 @@
+{% extends "edit.html" %}
+{% block content2 %}
+	<div class="head">
+	  <h2>Маршруты</h2>
+	</div>
+	<div class="sidebar">
+	<form action="" method="post">
+	<p>{{ form2.LeghtMin.label }}<br>
+	   {{ form2.LeghtMin() }}</p>
+	<p>{{ form2.LeghtMax.label }}<br>
+	   {{ form2.LeghtMax() }}</p>
+	<p>{{ form2.MinCost.label }}<br>
+	   {{ form2.MinCost() }}</p>
+	<p>{{ form2.MaxCost.label }}<br>
+	   {{ form2.MaxCost() }}</p>
+	<p>{{ form2.Country.label }}<br>
+	   {{ form2.Country() }}</p>
+	<p>{{ form2.City.label }}<br>
+	   {{ form2.City() }}</p>
+	   Количество остановок
+	<p>{{ form2.Stay0.label }}<br>
+	   {{ form2.Stay0() }}</p>
+	<p>{{ form2.Stay1.label }}<br>
+	   {{ form2.Stay1() }}</p>
+	   Звёзд отелей
+	<p>{{ form2.Hotel0.label }}<br>
+	   {{ form2.Hotel0() }}</p>
+	<p>{{ form2.Hotel1.label }}<br>
+	   {{ form2.Hotel1() }}</p>
+	<p>{{ form2.Sortroute.label }}<br>
+	   {{ form2.Sortroute() }}</p>
+	<p>{{ form2.SortType() }}</p>
+	<p>{{ form2.submit() }}
+	<input type="hidden" name="form" value="search"/>
+	</p>  
+	</form>
+	</div>
+	<div <div class="list">
+	{% if not current_user.is_anonymous %}
+{% if current_user.check_role() %}
+<p>
+	<form method="post" action="">
+		<input type="submit" name="add_route" value="Добавить новый маршрут" class="button2" />
+	</form>
+</p>
+{% endif %}
+{% endif %}
+<p>
+ {% if form %}
+ <div class="elem">
+ <form action="" method="post"  novalidate>
+        {{ form.hidden_tag() }}
+		<p>
+            {{ form.Name.label }}<br>
+            {{ form.Name }}<br>
+            {% for error in form.Name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.Cost.label }}<br>
+            {{ form.Cost }}<br>
+            {% for error in form.Cost.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.MaxSize.label }}<br>
+            {{ form.MaxSize }}<br>
+            {% for error in form.MaxSize.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+		 <p>
+            {{ form.MinSize.label }}<br>
+            {{ form.MinSize }}<br>
+            {% for error in form.MinSize.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+		 <p>
+            {{ form.BelaySize.label }}<br>
+            {{ form.BelaySize }}<br>
+            {% for error in form.BelaySize.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+		 <p>
+            {{ form.Duration.label }}<br>
+            {{ form.Duration }}<br>
+            {% for error in form.Duration.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+		 <p>
+            {{ form.Season.label }}<br>
+            {{ form.Season }}<br>
+            {% for error in form.Season.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}
+		<input type="hidden" name="form" value="route"/>
+		</p>
+		<p>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                     <ul class=flashes>
+                     {% for message in messages %}
+                         <li>{{ message }}</li>
+                     {% endfor %}
+                     </ul>
+                {% endif %}
+            {% endwith %}
+        </p>
+    </form>
+	</div>
+ {% endif %}
+{% if route %}
+{% for route in route %}
+<div class="elem">
+
+{{ route.name}}
+{% if not current_user.is_anonymous %}
+{% if current_user.check_role() %}
+<form method="post" action="">
+			<input type="hidden" name="name" value={{ route.name}}>
+			<input type="submit" name="delete_route" value="X" class="button3" />
+			</form>
+
+<p>
+{% endif %}
+{% endif %}
+стоимость:{{ route.cost}} численность:{{ route.minsize}}-{{ route.maxsize}} страховка:{{ route.belaysize}} длительность:{{ route.duration}} время года:{{ route.season}}
+<p> 
+<a href="{{ url_for('stay',nameroute=route.name ) }}">остановки {{route.stay}}</a>
+</p>
+</p>
+</div>
+<hr>
+{% endfor %}
+{% endif %}
+ </div>
+ {% endblock %}
